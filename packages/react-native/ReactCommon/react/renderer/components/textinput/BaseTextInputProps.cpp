@@ -114,7 +114,9 @@ BaseTextInputProps::BaseTextInputProps(
           rawProps,
           "readOnly",
           sourceProps.readOnly,
-          {})) {}
+          {})),
+      regex(convertRawProp(context, rawProps, "regex", sourceProps.regex, {})) {
+}
 
 void BaseTextInputProps::setProp(
     const PropsParserContext& context,
@@ -194,6 +196,7 @@ void BaseTextInputProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(autoCapitalize);
     RAW_SET_PROP_SWITCH_CASE_BASIC(editable);
     RAW_SET_PROP_SWITCH_CASE_BASIC(readOnly);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(regex);
   }
 }
 

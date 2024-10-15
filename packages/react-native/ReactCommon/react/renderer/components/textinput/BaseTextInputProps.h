@@ -66,6 +66,8 @@ class BaseTextInputProps : public ViewProps, public BaseTextProps {
 
   bool editable{true};
   bool readOnly{false};
+
+  std::string regex{};
 };
 
 } // namespace facebook::react

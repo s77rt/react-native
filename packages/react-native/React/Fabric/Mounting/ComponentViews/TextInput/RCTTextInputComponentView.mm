@@ -62,6 +62,8 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
   BOOL _comingFromJS;
   BOOL _didMoveToWindow;
 
+  NSRegularExpression *regex;
+
   /*
    * Newly initialized default typing attributes contain a no-op NSParagraphStyle and NSShadow. These cause inequality
    * between the AttributedString backing the input and those generated from state. We store these attributes to make
@@ -272,6 +274,13 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
   if (newTextInputProps.inputAccessoryViewID != oldTextInputProps.inputAccessoryViewID) {
     _backedTextInputView.inputAccessoryViewID = RCTNSStringFromString(newTextInputProps.inputAccessoryViewID);
   }
+
+  if (newTextInputProps.regex != oldTextInputProps.regex) {
+    regex = [NSRegularExpression regularExpressionWithPattern:RCTNSStringFromString(newTextInputProps.regex)
+                                                      options:NSRegularExpressionCaseInsensitive
+                                                        error:nil];
+  }
+
   [super updateProps:props oldProps:oldProps];
 
   [self setDefaultInputAccessoryView];
@@ -412,6 +421,14 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
     }
 
     return allowedLength > text.length ? text : [text substringToIndex:allowedLength];
+  }
+
+  if (regex) {
+    NSMutableString *newString = [_backedTextInputView.attributedText.string mutableCopy];
+    [newString replaceCharactersInRange:range withString:text];
+    if ([regex numberOfMatchesInString:newString options:0 range:NSMakeRange(0, newString.length)] == 0) {
+      return nil;
+    }
   }
 
   return text;

@@ -342,6 +342,7 @@ folly::dynamic AndroidTextInputProps::getDynamic() const {
   props["cursorColor"] = toAndroidRepr(cursorColor);
   props["mostRecentEventCount"] = mostRecentEventCount;
   props["text"] = text;
+  props["regex"] = regex;
 
   props["hasPadding"] = hasPadding;
   props["hasPaddingHorizontal"] = hasPaddingHorizontal;

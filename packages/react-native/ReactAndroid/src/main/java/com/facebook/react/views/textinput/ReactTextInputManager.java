@@ -776,6 +776,12 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
     view.setLines(numLines);
   }
 
+  @ReactProp(name = "regex")
+  public void setRegex(ReactEditText view, @Nullable String regex) {
+    FLog.e("s77rt", regex);
+  }
+
+
   @ReactProp(name = "maxLength")
   public void setMaxLength(ReactEditText view, @Nullable Integer maxLength) {
     InputFilter[] currentFilters = view.getFilters();

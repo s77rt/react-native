@@ -153,6 +153,7 @@ const RCTTextInputViewConfig = {
     lineBreakStrategyIOS: true,
     lineBreakModeIOS: true,
     smartInsertDelete: true,
+    regex: true,
     ...ConditionallyIgnoredEventHandlers({
       onChange: true,
       onSelectionChange: true,

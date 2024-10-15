@@ -721,6 +721,7 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
     mostRecentEventCount: true,
     inlineImageLeft: true,
     editable: true,
+    regex: true,
     fontVariant: true,
     borderBottomRightRadius: true,
     borderBottomColor: {
