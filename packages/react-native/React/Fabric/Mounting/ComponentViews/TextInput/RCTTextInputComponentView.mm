@@ -277,7 +277,7 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
 
   if (newTextInputProps.regex != oldTextInputProps.regex) {
     regex = [NSRegularExpression regularExpressionWithPattern:RCTNSStringFromString(newTextInputProps.regex)
-                                                      options:NSRegularExpressionCaseInsensitive
+                                                      options:0
                                                         error:nil];
   }
 
