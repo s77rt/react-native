@@ -778,7 +778,16 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
 
   @ReactProp(name = "regex")
   public void setRegex(ReactEditText view, @Nullable String regex) {
-    FLog.e("s77rt", regex);
+    InputFilter[] newFilters = EMPTY_FILTERS;
+    // s77rt TBD
+    if (regex == null) {
+      newFilters = EMPTY_FILTERS;
+    } else {
+      newFilters = new InputFilter[1];
+      newFilters[0] = new RegexFilter(regex);
+    }
+
+    view.setFilters(newFilters);
   }
 
 
