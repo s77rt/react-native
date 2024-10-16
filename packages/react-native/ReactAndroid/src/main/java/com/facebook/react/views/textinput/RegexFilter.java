@@ -31,7 +31,7 @@ public class RegexFilter implements InputFilter {
     if (start == 0 && end == source.length())
       newText.replace(dstart, dend, source.toString());
     else
-      newText.replace(dstart, dend, source.subSequence(start, end).toString());
+      newText.replace(dstart, dend, source.toString().substring(start, end));
     Matcher matcher = mPattern.matcher(newText);
     if (matcher.matches()) {
       return null;
