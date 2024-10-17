@@ -778,13 +778,40 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
 
   @ReactProp(name = "regex")
   public void setRegex(ReactEditText view, @Nullable String regex) {
+    InputFilter[] currentFilters = view.getFilters();
     InputFilter[] newFilters = EMPTY_FILTERS;
-    // s77rt TBD
+
     if (regex == null) {
-      newFilters = EMPTY_FILTERS;
+      if (currentFilters.length > 0) {
+        LinkedList<InputFilter> list = new LinkedList<>();
+        for (InputFilter currentFilter : currentFilters) {
+          if (!(currentFilter instanceof RegexFilter)) {
+            list.add(currentFilter);
+          }
+        }
+        if (!list.isEmpty()) {
+          newFilters = (InputFilter[]) list.toArray(new InputFilter[list.size()]);
+        }
+      }
     } else {
-      newFilters = new InputFilter[1];
-      newFilters[0] = new RegexFilter(regex);
+      if (currentFilters.length > 0) {
+        newFilters = currentFilters;
+        boolean replaced = false;
+        for (int i = 0; i < currentFilters.length; i++) {
+          if (currentFilters[i] instanceof RegexFilter) {
+            currentFilters[i] = new RegexFilter(regex);
+            replaced = true;
+          }
+        }
+        if (!replaced) {
+          newFilters = new InputFilter[currentFilters.length + 1];
+          System.arraycopy(currentFilters, 0, newFilters, 0, currentFilters.length);
+          newFilters[currentFilters.length] = new RegexFilter(regex);
+        }
+      } else {
+        newFilters = new InputFilter[1];
+        newFilters[0] = new RegexFilter(regex);
+      }
     }
 
     view.setFilters(newFilters);
@@ -821,7 +848,7 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
         if (!replaced) {
           newFilters = new InputFilter[currentFilters.length + 1];
           System.arraycopy(currentFilters, 0, newFilters, 0, currentFilters.length);
-          currentFilters[currentFilters.length] = new InputFilter.LengthFilter(maxLength);
+          newFilters[currentFilters.length] = new InputFilter.LengthFilter(maxLength);
         }
       } else {
         newFilters = new InputFilter[1];
