@@ -38,6 +38,7 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
   UIView<RCTBackedTextInputViewProtocol> *_backedTextInputView;
   NSUInteger _mostRecentEventCount;
   NSAttributedString *_lastStringStateWasUpdatedWith;
+  NSRegularExpression *_regex;
 
   /*
    * UIKit uses either UITextField or UITextView as its UIKit element for <TextInput>. UITextField is for single line
@@ -61,8 +62,6 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
    */
   BOOL _comingFromJS;
   BOOL _didMoveToWindow;
-
-  NSRegularExpression *regex;
 
   /*
    * Newly initialized default typing attributes contain a no-op NSParagraphStyle and NSShadow. These cause inequality
@@ -276,9 +275,9 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
   }
 
   if (newTextInputProps.regex != oldTextInputProps.regex) {
-    regex = [NSRegularExpression regularExpressionWithPattern:RCTNSStringFromString(newTextInputProps.regex)
-                                                      options:0
-                                                        error:nil];
+    _regex = [NSRegularExpression regularExpressionWithPattern:RCTNSStringFromString(newTextInputProps.regex)
+                                                       options:0
+                                                         error:nil];
   }
 
   [super updateProps:props oldProps:oldProps];
@@ -423,10 +422,10 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
     return allowedLength > text.length ? text : [text substringToIndex:allowedLength];
   }
 
-  if (regex) {
+  if (_regex) {
     NSMutableString *newString = [_backedTextInputView.attributedText.string mutableCopy];
     [newString replaceCharactersInRange:range withString:text];
-    if ([regex numberOfMatchesInString:newString options:0 range:NSMakeRange(0, newString.length)] == 0) {
+    if ([_regex numberOfMatchesInString:newString options:0 range:NSMakeRange(0, newString.length)] == 0) {
       return nil;
     }
   }
