@@ -403,6 +403,14 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
     }
   }
 
+  if (_regex) {
+    NSMutableString *newString = [_backedTextInputView.attributedText.string mutableCopy];
+    [newString replaceCharactersInRange:range withString:text];
+    if ([_regex numberOfMatchesInString:newString options:0 range:NSMakeRange(0, newString.length)] == 0) {
+      return nil;
+    }
+  }
+
   if (props.maxLength) {
     NSInteger allowedLength = props.maxLength - _backedTextInputView.attributedText.string.length + range.length;
 
@@ -420,14 +428,6 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
     }
 
     return allowedLength > text.length ? text : [text substringToIndex:allowedLength];
-  }
-
-  if (_regex) {
-    NSMutableString *newString = [_backedTextInputView.attributedText.string mutableCopy];
-    [newString replaceCharactersInRange:range withString:text];
-    if ([_regex numberOfMatchesInString:newString options:0 range:NSMakeRange(0, newString.length)] == 0) {
-      return nil;
-    }
   }
 
   return text;
