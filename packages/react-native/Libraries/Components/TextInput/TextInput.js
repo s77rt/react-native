@@ -740,6 +740,12 @@ export type Props = $ReadOnly<{|
   maxFontSizeMultiplier?: ?number,
 
   /**
+   * Restricts the text value to match the specified regular expression. Use this
+   * instead of implementing the logic in JS to avoid flicker.
+   */
+  regex?: ?string,
+
+  /**
    * Limits the maximum number of characters that can be entered. Use this
    * instead of implementing the logic in JS to avoid flicker.
    */

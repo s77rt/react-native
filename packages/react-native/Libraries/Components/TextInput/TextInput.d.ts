@@ -745,6 +745,12 @@ export interface TextInputProps
   inputMode?: InputModeOptions | undefined;
 
   /**
+   * Restricts the text value to match the specified regular expression. Use this
+   * instead of implementing the logic in JS to avoid flicker.
+   */
+  regex?: string | undefined;
+
+  /**
    * Limits the maximum number of characters that can be entered.
    * Use this instead of implementing the logic in JS to avoid flicker.
    */
