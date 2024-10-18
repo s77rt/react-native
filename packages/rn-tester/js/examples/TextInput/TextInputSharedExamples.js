@@ -175,6 +175,7 @@ class RewriteExampleInvalidCharacters extends React.Component<
     );
   }
 }
+
 class RewriteInvalidCharactersAndClearExample extends React.Component<
   $FlowFixMeProps,
   any,
