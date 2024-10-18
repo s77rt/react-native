@@ -175,58 +175,6 @@ class RewriteExampleInvalidCharacters extends React.Component<
     );
   }
 }
-class RewriteExampleInvalidCharacters2 extends React.Component<
-  $FlowFixMeProps,
-  any,
-> {
-  constructor(props: any | void) {
-    super(props);
-    this.state = {text: ''};
-  }
-  render(): React.Node {
-    return (
-      <View style={styles.rewriteContainer}>
-        <ExampleTextInput
-          testID="rewrite_no_sp_input"
-          autoCorrect={false}
-          multiline={false}
-          onChangeText={text => {
-            this.setState({text: text.replace(/\s/g, '')});
-          }}
-          regex="^\S*$"
-          value={this.state.text}
-        />
-      </View>
-    );
-  }
-}
-
-class RewriteExampleInvalidCharacters3 extends React.Component<
-  $FlowFixMeProps,
-  any,
-> {
-  constructor(props: any | void) {
-    super(props);
-    this.state = {text: ''};
-  }
-  render(): React.Node {
-    return (
-      <View style={styles.rewriteContainer}>
-        <ExampleTextInput
-          testID="rewrite_no_sp_input"
-          autoCorrect={false}
-          multiline={false}
-          onChangeText={text => {
-            this.setState({text: text.replace(/\s/g, '')});
-          }}
-          regex="^\d{0,8}(\.\d{0,2})?$"
-          value={this.state.text}
-        />
-      </View>
-    );
-  }
-}
-
 class RewriteInvalidCharactersAndClearExample extends React.Component<
   $FlowFixMeProps,
   any,
@@ -260,6 +208,27 @@ class RewriteInvalidCharactersAndClearExample extends React.Component<
             }
           }}
           title="Clear"
+        />
+      </View>
+    );
+  }
+}
+
+class RegexExampleInvalidCharacters extends React.Component<
+  $FlowFixMeProps,
+  any,
+> {
+  constructor(props: any | void) {
+    super(props);
+  }
+  render(): React.Node {
+    return (
+      <View style={styles.inputContainer}>
+        <ExampleTextInput
+          testID="regex_no_sp_input"
+          autoCorrect={false}
+          multiline={false}
+          regex="^\S*$"
         />
       </View>
     );
@@ -918,22 +887,16 @@ module.exports = ([
     },
   },
   {
-    title: 'Live Regex (no spaces allowed)',
-    render: function (): React.Node {
-      return <RewriteExampleInvalidCharacters2 />;
-    },
-  },
-  {
-    title: 'Live Regex (Expensify: Currency)',
-    render: function (): React.Node {
-      return <RewriteExampleInvalidCharacters3 />;
-    },
-  },
-  {
     name: 'clearButton',
     title: 'Live Re-Write (no spaces allowed) and clear',
     render: function (): React.Node {
       return <RewriteInvalidCharactersAndClearExample />;
+    },
+  },
+  {
+    title: 'Regex (no spaces allowed)',
+    render: function (): React.Node {
+      return <RegexExampleInvalidCharacters />;
     },
   },
   {
